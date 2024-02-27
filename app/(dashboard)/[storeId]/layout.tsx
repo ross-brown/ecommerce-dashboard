@@ -1,3 +1,4 @@
+import Navbar from "@/components/navbar";
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
@@ -25,7 +26,7 @@ export default async function DashbaordLayout({
 
   return (
     <>
-      <div>This will be a nav bar</div>
+      <Navbar />
       {children}
     </>
   );
