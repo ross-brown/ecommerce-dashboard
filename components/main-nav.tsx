@@ -33,6 +33,11 @@ export default function MainNav({
       active: pathname === `/${params.storeId}/sizes`
     },
     {
+      href: `/${params.storeId}/countries`,
+      label: "Countries",
+      active: pathname === `/${params.storeId}/countries`
+    },
+    {
       href: `/${params.storeId}/settings`,
       label: "Settings",
       active: pathname === `/${params.storeId}/settings`
