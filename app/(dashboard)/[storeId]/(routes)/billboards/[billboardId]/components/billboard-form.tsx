@@ -23,13 +23,11 @@ import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import axios from "axios";
 import AlertModal from "@/components/modals/alert-modal";
-import ApiAlert from "@/components/ui/api-alert";
-import { useOrigin } from "@/hooks/use-origin";
 import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
   label: z.string().min(1, { message: "Label cannot be empty." }),
-  imageUrl: z.string().min(1, { message: "imageUrl cannot be empty." }),
+  imageUrl: z.string().min(1, { message: "Image URL cannot be empty." }),
 });
 
 type BillboardFormValues = z.infer<typeof formSchema>;
@@ -41,7 +39,6 @@ interface BillboardFormProps {
 export default function BillboardForm({ initialData }: BillboardFormProps) {
   const params = useParams();
   const router = useRouter();
-  const origin = useOrigin();
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -67,8 +64,8 @@ export default function BillboardForm({ initialData }: BillboardFormProps) {
       } else {
         await axios.post(`/api/${params.storeId}/billboards`, data);
       }
-      router.refresh();
       router.push(`/${params.storeId}/billboards`);
+      router.refresh();
       toast.success(toastMessage);
     } catch (error) {
       toast.error("Something went wrong.");
@@ -82,7 +79,7 @@ export default function BillboardForm({ initialData }: BillboardFormProps) {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
       router.refresh();
-      router.push("/");
+      router.push(`/${params.storeId}/billboards`);
       toast.success("Billboard deleted.");
     } catch (error) {
       toast.error("Make sure you removed all categories using this billboard.");
@@ -156,7 +153,6 @@ export default function BillboardForm({ initialData }: BillboardFormProps) {
           </Button>
         </form>
       </Form>
-      <Separator />
     </>
   );
 }
