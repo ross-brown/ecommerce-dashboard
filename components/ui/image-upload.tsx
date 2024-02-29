@@ -51,7 +51,7 @@ export default function ImageUpload({
           </div>
         ))}
       </div>
-      <CldUploadWidget onSuccess={onUpload} uploadPreset="rmgtz107">
+      <CldUploadWidget onUpload={onUpload} uploadPreset="rmgtz107">
         {({ open }) => {
           const onClick = () => {
             open();

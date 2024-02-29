@@ -33,7 +33,7 @@ import {
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name cannot be empty." }),
-  billboardId: z.string().min(1),
+  billboardId: z.string().min(1, { message: "Please select a billboard" }),
 });
 
 type CategoryFormValues = z.infer<typeof formSchema>;

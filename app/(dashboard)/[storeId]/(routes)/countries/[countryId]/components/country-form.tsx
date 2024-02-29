@@ -162,7 +162,7 @@ export default function CountryForm({ initialData }: CountryFormProps) {
                     target="_blank"
                     className="text-xs hover:underline text-muted-foreground"
                   >
-                    List of Codes Here*
+                    *List of Codes Here
                   </a>
                   <FormMessage />
                 </FormItem>

@@ -28,3 +28,9 @@ export function isValidCountryCode(countryCode: string) {
 
   return validCountryCodes.includes(countryCode.toUpperCase());
 }
+
+
+export const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD"
+});
