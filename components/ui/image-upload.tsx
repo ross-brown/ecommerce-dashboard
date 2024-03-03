@@ -44,7 +44,7 @@ export default function ImageUpload({
             </div>
             <Image
               fill
-              className="object-cover"
+              className="object-contain"
               alt="Image"
               src={url}
             />
