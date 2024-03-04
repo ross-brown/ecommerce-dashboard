@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
+import { Product } from "@prisma/client";
 
 import { stripe } from "@/lib/stripe";
 import prismadb from "@/lib/prismadb";
@@ -19,11 +20,19 @@ export async function POST(
   req: Request,
   { params }: { params: { storeId: string; }; }
 ) {
-  const { productIds } = await req.json();
+  // {product: Product, quantity: number}[]
+  const { items }: {
+    items: {
+      product: Product;
+      quantity: number;
+    }[];
+  } = await req.json();
 
-  if (!productIds || productIds.length === 0) {
-    return new NextResponse("Product IDs are required", { status: 400 });
+  if (!items || items.length === 0) {
+    return new NextResponse("Items are required", { status: 400 });
   }
+
+  const productIds = items.map(item => item.product.id);
 
   const products = await prismadb.product.findMany({
     where: {
@@ -36,8 +45,10 @@ export async function POST(
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
   products.forEach(product => {
+    const productQuantity = items.find(item => item.product.id === product.id)?.quantity;
+
     line_items.push({
-      quantity: 1,
+      quantity: productQuantity,
       price_data: {
         currency: "USD",
         product_data: {
